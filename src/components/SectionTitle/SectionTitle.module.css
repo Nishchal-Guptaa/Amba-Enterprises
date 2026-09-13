@@ -1,0 +1,54 @@
+.sectionTitle {
+  margin-bottom: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  animation: fadeUp 0.6s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.centered {
+  align-items: center;
+  text-align: center;
+}
+
+.title {
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.light .title {
+  color: var(--secondary);
+}
+
+.underline {
+  width: 60px;
+  height: 4px;
+  background-color: var(--accent);
+  margin-bottom: 1rem;
+  border-radius: var(--radius-sm);
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 600px;
+}
+
+.light .subtitle {
+  color: var(--bg-light);
+  opacity: 0.9;
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

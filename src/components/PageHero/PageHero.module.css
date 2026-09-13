@@ -1,0 +1,89 @@
+.pageHero {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  position: relative;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  animation: fadeIn 0.8s ease-out;
+}
+
+@media (min-width: 768px) {
+  .pageHero {
+    height: 250px;
+  }
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: radial-gradient(var(--primary-lighter) 1px, transparent 1px);
+  background-size: 20px 20px;
+  opacity: 0.2;
+}
+
+.content {
+  position: relative;
+  z-index: 1;
+  padding: 0 1rem;
+}
+
+.title {
+  color: var(--secondary);
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 3rem;
+  }
+}
+
+.subtitle {
+  color: var(--bg-light);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.breadcrumbs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--text-light);
+}
+
+.breadcrumbs a {
+  color: var(--bg-light);
+  text-decoration: none;
+  transition: color var(--transition-fast) ease;
+}
+
+.breadcrumbs a:hover {
+  color: var(--accent);
+}
+
+.separator {
+  margin: 0 0.5rem;
+  color: var(--text-light);
+}
+
+.currentCrumb {
+  color: var(--accent);
+  font-weight: 500;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

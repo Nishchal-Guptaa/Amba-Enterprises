@@ -1,0 +1,251 @@
+.homePage {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* About Preview Section */
+.aboutPreview {
+  padding: 5rem 5%;
+  background-color: var(--bg-light);
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.aboutLeft {
+  flex: 1;
+}
+
+.aboutTitle {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.aboutText {
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+  font-size: 1.1rem;
+}
+
+.learnMoreBtn {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background-color: var(--primary);
+  color: var(--secondary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: background-color var(--transition-fast) ease;
+  margin-top: 1rem;
+}
+
+.learnMoreBtn:hover {
+  background-color: var(--primary-light);
+}
+
+.aboutRight {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.statCard {
+  background-color: var(--bg-card);
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  text-align: center;
+  transition: transform var(--transition-normal) ease, box-shadow var(--transition-normal) ease;
+}
+
+.statCard:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.statValue {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* Featured Brands Section */
+.brandsSection {
+  padding: 5rem 5%;
+  background-color: var(--bg-card);
+  text-align: center;
+}
+
+.brandsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.viewAllBtn {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  background-color: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  transition: all var(--transition-fast) ease;
+}
+
+.viewAllBtn:hover {
+  background-color: var(--primary);
+  color: var(--secondary);
+}
+
+/* Products Section */
+.productsSection {
+  padding: 5rem 5%;
+  background-color: var(--bg-light);
+  text-align: center;
+}
+
+.productsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 3rem;
+}
+
+/* Why Choose Us Section */
+.whyUsSection {
+  padding: 2rem;
+  background-color: var(--primary);
+  text-align: center;
+}
+
+.whyUsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.whyUsGrid > div {
+  flex: 0 1 250px;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* Enquiry CTA Section */
+.ctaSection {
+  padding: 5rem 5%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
+  text-align: center;
+  color: var(--secondary);
+}
+
+.ctaTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.ctaSubtitle {
+  font-size: 1.2rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.ctaBtn {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background-color: var(--secondary);
+  color: var(--primary);
+  text-decoration: none;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: transform var(--transition-fast) ease, box-shadow var(--transition-fast) ease;
+  box-shadow: var(--shadow-md);
+  border: none;
+  cursor: pointer;
+}
+
+.ctaBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+}
+
+.ctaBtnOutline {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background-color: transparent;
+  color: var(--secondary);
+  text-decoration: none;
+  border: 2px solid var(--secondary);
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 1.1rem;
+  transition: all var(--transition-fast) ease;
+}
+
+.ctaBtnOutline:hover {
+  background-color: var(--secondary);
+  color: var(--accent-hover);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .brandsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .aboutPreview {
+    flex-direction: column;
+    padding: 4rem 5%;
+  }
+
+  .aboutTitle {
+    font-size: 2rem;
+  }
+
+  .aboutRight {
+    width: 100%;
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .brandsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .ctaButtons {
+    flex-direction: column;
+  }
+  
+  .ctaBtn, .ctaBtnOutline {
+    width: 100%;
+    max-width: 300px;
+  }
+}
