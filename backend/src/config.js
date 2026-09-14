@@ -27,6 +27,17 @@ export const config = {
     process.env.PASSWORD_RESET_REDIRECT_URL ||
     `${process.env.FRONTEND_URL || 'http://localhost:5173'}/update-password`,
   supabaseAutoConfirm: process.env.SUPABASE_AUTO_CONFIRM === 'true',
+  smtp: {
+    host: process.env.SMTP_HOST,
+    port: Number(process.env.SMTP_PORT || 587),
+    secure: process.env.SMTP_SECURE === 'true' || Number(process.env.SMTP_PORT) === 465,
+    user: process.env.SMTP_USER,
+    password: process.env.SMTP_PASSWORD || process.env.SMTP_PASS,
+    service: process.env.SMTP_SERVICE,
+    from:
+      process.env.SMTP_FROM ||
+      (process.env.SMTP_USER ? `Amba Enterprises <${process.env.SMTP_USER}>` : null),
+  },
 };
 
 export function requireConfig(...keys) {

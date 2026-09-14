@@ -114,21 +114,60 @@ router.post(
     const email = requiredString(req.body.email, 'email').toLowerCase();
     const redirectTo = req.body.redirectTo || config.passwordResetRedirectUrl;
 
-    if (isEmailConfigured()) {
-      const { data, error } = await getSupabaseAdmin().auth.admin.generateLink({
-        type: 'recovery',
-        email,
-        options: { redirectTo },
-      });
-      if (error) throw error;
-      await sendPasswordResetEmail({ to: email, actionLink: data.properties.action_link });
-    } else {
-      // Preserve Supabase's managed email behavior when SMTP is not configured.
-      const { error } = await getSupabasePublic().auth.resetPasswordForEmail(email, {
-        redirectTo,
-      });
-      if (error) throw error;
+    if (!isEmailConfigured()) {
+      const error = new Error(
+        'Email service is not configured on the backend. Please set SMTP credentials (SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, SMTP_FROM) in your .env file to send password reset emails.',
+      );
+      error.statusCode = 503;
+      error.expose = true;
+      throw error;
     }
+
+    const admin = getSupabaseAdmin();
+    const { data, error } = await admin.auth.admin.generateLink({
+      type: 'recovery',
+      email,
+      options: { redirectTo },
+    });
+
+    if (error) {
+      // If user does not exist in Supabase, do not reveal user existence for security
+      if (
+        error.message?.toLowerCase().includes('not found') ||
+        error.code === 'user_not_found' ||
+        error.status === 404
+      ) {
+        console.info(`[Auth] Password reset requested for unregistered email: ${email}`);
+        return res.json({
+          success: true,
+          message: 'If the account exists, a reset email has been sent.',
+        });
+      }
+      throw error;
+    }
+
+    // Determine the one-time link:
+    // Support direct token_hash link if configured or fallback to action_link
+    const directLink = data.properties?.hashed_token
+      ? `${redirectTo}${redirectTo.includes('?') ? '&' : '?'}token_hash=${encodeURIComponent(data.properties.hashed_token)}`
+      : null;
+
+    const resetLink =
+      process.env.PASSWORD_RESET_USE_DIRECT_LINK === 'true' && directLink
+        ? directLink
+        : data.properties.action_link;
+
+    const userName =
+      data.user?.user_metadata?.full_name ||
+      data.user?.user_metadata?.name ||
+      '';
+
+    await sendPasswordResetEmail({
+      to: email,
+      resetLink,
+      userName,
+    });
+
     // Do not reveal whether an account exists.
     res.json({ success: true, message: 'If the account exists, a reset email has been sent.' });
   }),
@@ -145,12 +184,28 @@ router.post(
       token_hash: tokenHash,
     });
     if (error) throw error;
-    const { data: updated, error: updateError } = await client.auth.updateUser({
-      password: newPassword,
-    });
+
+    // Use admin client to reliably update password without relying on client session persistence
+    const admin = getSupabaseAdmin();
+    const { data: updated, error: updateError } = await admin.auth.admin.updateUserById(
+      data.user.id,
+      { password: newPassword },
+    );
     if (updateError) throw updateError;
-    await client.auth.signOut();
+
     res.json({ user: updated.user, session: data.session || null });
+  }),
+);
+
+router.get(
+  '/email-status',
+  asyncHandler(async (_req, res) => {
+    res.json({
+      configured: isEmailConfigured(),
+      from: config.smtp?.from || config.smtp?.user || null,
+      host: config.smtp?.host || null,
+      service: config.smtp?.service || null,
+    });
   }),
 );
 
