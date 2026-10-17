@@ -8,7 +8,7 @@ import SectionTitle from "../../components/SectionTitle/SectionTitle";
 import StrengthCard from "../../components/StrengthCard/StrengthCard";
 import unikLogo from "../../assets/unik_logo.jpg";
 import astralLogo from "../../assets/astral_logo.png";
-import supremeLogo from "../../assets/SupremeLogo.png"
+import supremeLogo from "../../assets/SupremeLogo.png";
 import solido_logo from "../../assets/Solido_Logo.png";
 import zolotoLogo from "../../assets/zoloto_logo.png";
 import vsLogo from "../../assets/VS_logo.png";
@@ -20,7 +20,8 @@ const featuredProducts = [
     id: "gims-pipes",
     name: "GI Fittings",
     brand: "Unik",
-    description: "Leading Manufacturer of Malleable Iron Galvanized Pipe Fittings in India",
+    description:
+      "Leading Manufacturer of Malleable Iron Galvanized Pipe Fittings in India",
     image: unikLogo,
     website: "https://www.unikpipe.com/",
     popularity: 98,
@@ -62,7 +63,8 @@ const featuredProducts = [
     brand: "Mangalam",
     description: "Consistent electrodes for clean, dependable welds.",
     image: mangalamLogo,
-    website: "https://mangalamindia.in/?srsltid=AU7gw4V1rVV5NxeFVe-FZdmBfxTMHfY8HdftH4xQg-uvPhg2IyGR8DvZ",
+    website:
+      "https://mangalamindia.in/?srsltid=AU7gw4V1rVV5NxeFVe-FZdmBfxTMHfY8HdftH4xQg-uvPhg2IyGR8DvZ",
     popularity: 89,
     newest: 2,
   },
@@ -90,7 +92,8 @@ const featuredProducts = [
     id: "vs-fittings",
     name: "VS Forged Fittings",
     brand: "VS",
-    description: "Manufacturing Top of the Line MS steel pipe fittings for high durability.",
+    description:
+      "Manufacturing Top of the Line MS steel pipe fittings for high durability.",
     image: vsLogo,
     website: "https://www.vsfittings.com/",
     popularity: 93,
@@ -106,6 +109,9 @@ const HomePage = () => {
       <HeroSection />
 
       <section className={styles.productsSection}>
+        <div className="animate-on-scroll">
+          <SectionTitle title="Brands We Deals In" />
+        </div>
         <ProductGallery products={featuredProducts} />
       </section>
 
