@@ -10,7 +10,6 @@ const HeroSection = () => {
     <section className={styles.heroSection}>
       <div className={styles.container}>
         <div className={styles.content}>
-          <div className={styles.badge}>Your Trusted Distributor</div>
           <h1 className={styles.title}>
             Quality Pipes,<br />Fittings &amp; Solutions
           </h1>

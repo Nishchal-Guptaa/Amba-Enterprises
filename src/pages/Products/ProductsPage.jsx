@@ -6,107 +6,140 @@ import useScrollAnimation from '../../hooks/useScrollAnimation';
 import { productCategories } from '../../data/data';
 import styles from './ProductsPage.module.css';
 
+/* ─── Subcategory card with always-visible image gallery ─── */
+function SubcategoryCard({ sub }) {
+  const [active, setActive] = useState(0);
+  const images = sub.images || [];
+
+  return (
+    <div className={styles.subCard}>
+      {/* Gallery */}
+      {images.length > 0 && (
+        <div className={styles.gallery}>
+          <div className={styles.galleryMain}>
+            <img
+              src={images[active].src}
+              alt={images[active].caption}
+              className={styles.galleryMainImg}
+            />
+            <span className={styles.galleryCaption}>{images[active].caption}</span>
+          </div>
+          {images.length > 1 && (
+            <div className={styles.galleryThumbs}>
+              {images.map((img, i) => (
+                <button
+                  key={i}
+                  className={`${styles.thumb} ${i === active ? styles.thumbActive : ''}`}
+                  onClick={() => setActive(i)}
+                  aria-label={img.caption}
+                >
+                  <img src={img.src} alt={img.caption} />
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Info */}
+      <div className={styles.subCardInfo}>
+        <div className={styles.subCardHeader}>
+          <Package size={16} className={styles.subCardIcon} />
+          <h4 className={styles.subCardName}>{sub.name}</h4>
+        </div>
+        <p className={styles.subCardDesc}>{sub.description}</p>
+
+        {sub.brands && sub.brands.length > 0 && (
+          <div className={styles.brandsTags}>
+            {sub.brands.map(brand => (
+              <span key={brand} className={styles.brandTag}>{brand}</span>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Category section ─── */
+function CategorySection({ category }) {
+  return (
+    <section className={`animate-on-scroll ${styles.categorySection}`}>
+      <div className={styles.categoryHeader}>
+        <span className={styles.categoryIcon}>{category.icon}</span>
+        <SectionTitle title={category.name} subtitle={category.description} />
+      </div>
+
+      <div className={styles.subGrid}>
+        {category.subcategories && category.subcategories.map(sub => (
+          <SubcategoryCard key={sub.name} sub={sub} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ─── Main page ─── */
 export default function ProductsPage() {
   useScrollAnimation();
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredData = useMemo(() => {
-    let result = productCategories;
-
-    // Filter by search query
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      result = result.map(cat => {
-        const catMatches = cat.name.toLowerCase().includes(query) || cat.description.toLowerCase().includes(query);
-        const filteredSubs = (cat.subcategories || []).filter(sub => 
-          sub.name.toLowerCase().includes(query) || 
-          (sub.description && sub.description.toLowerCase().includes(query)) ||
-          (sub.brands && sub.brands.some(b => b.toLowerCase().includes(query)))
-        );
-        
-        if (catMatches || filteredSubs.length > 0) {
-          return { ...cat, subcategories: filteredSubs };
-        }
-        return null;
-      }).filter(Boolean);
-    }
-    
-    return result;
+    if (!searchQuery.trim()) return productCategories;
+    const query = searchQuery.toLowerCase();
+    return productCategories.map(cat => {
+      const catMatches =
+        cat.name.toLowerCase().includes(query) ||
+        cat.description.toLowerCase().includes(query);
+      const filteredSubs = (cat.subcategories || []).filter(sub =>
+        sub.name.toLowerCase().includes(query) ||
+        (sub.description && sub.description.toLowerCase().includes(query)) ||
+        (sub.brands && sub.brands.some(b => b.toLowerCase().includes(query)))
+      );
+      if (catMatches || filteredSubs.length > 0) {
+        return { ...cat, subcategories: catMatches ? cat.subcategories : filteredSubs };
+      }
+      return null;
+    }).filter(Boolean);
   }, [searchQuery]);
 
   return (
     <div className={styles.pageContainer}>
-      <PageHero 
-        title="Our Products" 
-        subtitle="Complete range of pipes, fittings & industrial supplies" 
-        breadcrumbs 
+      <PageHero
+        title="Our Products"
+        subtitle="Complete range of pipes, fittings & industrial supplies"
+        breadcrumbs
       />
 
       <div className={styles.container}>
+        {/* Search */}
         <div className={`animate-on-scroll ${styles.controlsSection}`}>
           <div className={styles.searchBox}>
             <Search className={styles.searchIcon} size={20} />
-            <input 
-              type="text" 
-              placeholder="Search products, categories, or brands..." 
+            <input
+              type="text"
+              placeholder="Search products, categories, or brands..."
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              onChange={e => setSearchQuery(e.target.value)}
               className={styles.searchInput}
             />
           </div>
         </div>
 
+        {/* Content */}
         <div className={styles.productsArea}>
           {filteredData.length === 0 ? (
             <div className={styles.noResults}>
               <Package size={48} className={styles.noResultsIcon} />
               <h3>No products found</h3>
               <p>Try adjusting your search query.</p>
-              <button 
-                className={styles.clearBtn}
-                onClick={() => setSearchQuery('')}
-              >
+              <button className={styles.clearBtn} onClick={() => setSearchQuery('')}>
                 Clear Search
               </button>
             </div>
           ) : (
             filteredData.map(category => (
-              <section key={category.id} className={`animate-on-scroll ${styles.categorySection}`}>
-                <div className={styles.categoryHeader}>
-                  <SectionTitle title={category.name} subtitle={category.description} leftAlign />
-                </div>
-                
-                <div className={styles.grid}>
-                  {category.subcategories && category.subcategories.length > 0 ? (
-                    category.subcategories.map(sub => (
-                      <div key={sub.id || sub.name} className={styles.card}>
-                        <div className={styles.cardHeader}>
-                          <div className={styles.cardIconWrapper}>
-                            <Package size={24} className={styles.cardIcon} />
-                          </div>
-                          <h4 className={styles.cardTitle}>{sub.name}</h4>
-                        </div>
-                        <p className={styles.cardDesc}>{sub.description}</p>
-                        
-                        {sub.brands && sub.brands.length > 0 && (
-                          <div className={styles.cardBrands}>
-                            <span className={styles.brandsLabel}>Available in:</span>
-                            <div className={styles.brandsTags}>
-                              {sub.brands.map(brand => (
-                                <span key={brand} className={styles.brandTag}>{brand}</span>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    ))
-                  ) : (
-                    <div className={styles.noSubcategories}>
-                      <p>No subcategories match your search.</p>
-                    </div>
-                  )}
-                </div>
-              </section>
+              <CategorySection key={category.id} category={category} />
             ))
           )}
         </div>
@@ -114,4 +147,3 @@ export default function ProductsPage() {
     </div>
   );
 }
-

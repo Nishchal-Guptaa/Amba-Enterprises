@@ -1,6 +1,5 @@
-.pageContainer {
-  width: 100%;
-}
+/* ── Page shell ─────────────────────────────────────── */
+.pageContainer { width: 100%; }
 
 .container {
   max-width: 1200px;
@@ -8,6 +7,7 @@
   padding: 4rem 1rem;
 }
 
+/* ── Search bar ─────────────────────────────────────── */
 .controlsSection {
   margin-bottom: 3rem;
   display: flex;
@@ -39,6 +39,7 @@
   border-radius: var(--radius-md);
   font-size: 1rem;
   outline: none;
+  background: white;
   transition: all var(--transition-fast) ease;
 }
 
@@ -47,101 +48,186 @@
   box-shadow: 0 0 0 3px rgba(11, 29, 58, 0.1);
 }
 
+/* ── Category section ───────────────────────────────── */
 .categorySection {
-  margin-bottom: 4rem;
+  margin-bottom: 4.5rem;
+  padding-bottom: 4rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.categorySection:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
 
 .categoryHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
   margin-bottom: 2rem;
 }
 
-.grid {
+.categoryIcon {
+  font-size: 2.5rem;
+  line-height: 1;
+}
+
+/* ── Subcategory grid ───────────────────────────────── */
+.subGrid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: 1fr;
   gap: 1.5rem;
 }
 
-.card {
-  background: var(--bg-card);
-  border-radius: var(--radius-md);
-  padding: 1.5rem;
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--transition-normal) ease, box-shadow var(--transition-normal) ease;
-  display: flex;
-  flex-direction: column;
+@media (min-width: 600px) {
+  .subGrid { grid-template-columns: repeat(2, 1fr); }
 }
 
-.card:hover {
-  transform: translateY(-5px);
+@media (min-width: 1024px) {
+  .subGrid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ── Subcategory card ───────────────────────────────── */
+.subCard {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.subCard:hover {
+  transform: translateY(-4px);
   box-shadow: var(--shadow-md);
   border-color: var(--primary-lighter);
 }
 
-.cardHeader {
+/* ── Gallery inside card ────────────────────────────── */
+.gallery {
   display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1rem;
+  flex-direction: column;
+  gap: 0;
 }
 
-.cardIconWrapper {
+.galleryMain {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  background: var(--bg-light);
+  overflow: hidden;
+}
+
+.galleryMainImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.subCard:hover .galleryMainImg {
+  transform: scale(1.05);
+}
+
+.galleryCaption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 100%);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 1rem 0.75rem 0.5rem;
+  text-align: center;
+}
+
+/* ── Thumbnail strip ────────────────────────────────── */
+.galleryThumbs {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
+  gap: 2px;
+  background: var(--border);
+}
+
+.thumb {
+  flex: 1;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity 0.2s ease;
+  overflow: hidden;
+}
+
+.thumb img {
+  width: 100%;
   height: 48px;
-  background-color: rgba(11, 29, 58, 0.05);
-  border-radius: var(--radius-sm);
-  color: var(--primary);
+  object-fit: cover;
+  display: block;
 }
 
-.cardTitle {
-  font-size: 1.25rem;
+.thumb:hover { opacity: 0.8; }
+
+.thumbActive { opacity: 1; }
+
+/* ── Card info section ──────────────────────────────── */
+.subCardInfo {
+  padding: 1rem 1.1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.subCardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.subCardIcon {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+.subCardName {
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
 }
 
-.cardDesc {
+.subCardDesc {
+  font-size: 0.85rem;
   color: var(--text-muted);
-  font-size: 0.95rem;
-  line-height: 1.5;
-  margin-bottom: 1.5rem;
-  flex-grow: 1;
+  margin: 0;
+  line-height: 1.45;
 }
 
-.cardBrands {
-  margin-top: auto;
-  border-top: 1px solid var(--border);
-  padding-top: 1rem;
-}
-
-.brandsLabel {
-  display: block;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-light);
-  margin-bottom: 0.5rem;
-}
-
+/* ── Brand tags ─────────────────────────────────────── */
 .brandsTags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
 }
 
 .brandTag {
   background-color: var(--bg-light);
   color: var(--primary);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  padding: 0.25rem 0.75rem;
+  padding: 0.2rem 0.6rem;
   border-radius: var(--radius-sm);
 }
 
+/* ── No results ─────────────────────────────────────── */
 .noResults {
   text-align: center;
   padding: 4rem 2rem;
@@ -153,9 +239,7 @@
   gap: 1rem;
 }
 
-.noResultsIcon {
-  color: var(--text-light);
-}
+.noResultsIcon { color: var(--text-light); }
 
 .noResults h3 {
   color: var(--text-primary);
@@ -169,7 +253,7 @@
 }
 
 .clearBtn {
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   padding: 0.75rem 1.5rem;
   background-color: var(--primary);
   color: var(--secondary);
@@ -180,27 +264,4 @@
   transition: background-color var(--transition-fast) ease;
 }
 
-.clearBtn:hover {
-  background-color: var(--primary-light);
-}
-
-.noSubcategories {
-  padding: 2rem;
-  background-color: var(--bg-light);
-  border-radius: var(--radius-md);
-  text-align: center;
-  color: var(--text-muted);
-}
-
-@media (min-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (min-width: 1024px) {
-  .grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
+.clearBtn:hover { background-color: var(--primary-light); }

@@ -27,8 +27,7 @@ const Navbar = () => {
     { name: "About", path: "/about" },
     { name: "Products", path: "/products" },
     { name: "Place Order", path: "/order" },
-    { name: "Brands", path: "/brands" },
-    { name: "Gallery", path: "/gallery" },
+
   ];
 
   const closeMenu = () => setIsMobileMenuOpen(false);

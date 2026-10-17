@@ -596,7 +596,7 @@
 
 .addToCartBtn {
   flex: 1;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0.75rem;
   background: var(--primary);
   color: var(--secondary);
   border-radius: var(--radius-sm);
@@ -606,6 +606,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
+  white-space: nowrap;
   transition: all var(--transition-fast);
 }
 
@@ -873,6 +874,18 @@
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--text-primary);
+}
+
+.quotationNotice {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  background: var(--bg-card);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border);
+  text-align: center;
+  margin-top: var(--space-xs);
+  line-height: 1.4;
 }
 
 .totalRow {

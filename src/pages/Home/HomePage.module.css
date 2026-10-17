@@ -143,7 +143,7 @@
   margin-top: 3rem;
 }
 
-.whyUsGrid > div {
+.whyUsGrid>div {
   flex: 0 1 250px;
   width: 100%;
   max-width: 300px;
@@ -239,12 +239,13 @@
   .brandsGrid {
     grid-template-columns: 1fr;
   }
-  
+
   .ctaButtons {
     flex-direction: column;
   }
-  
-  .ctaBtn, .ctaBtnOutline {
+
+  .ctaBtn,
+  .ctaBtnOutline {
     width: 100%;
     max-width: 300px;
   }

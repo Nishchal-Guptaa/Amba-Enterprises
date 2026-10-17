@@ -170,22 +170,6 @@ export function generatePasswordResetHtml({ resetLink, email, userName }) {
                 </tr>
               </table>
 
-              <!-- Fallback Link -->
-              <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top: 24px; background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 8px; padding: 14px;">
-                <tr>
-                  <td>
-                    <p style="margin: 0 0 8px; font-size: 12px; color: #6B7280; font-weight: 600;">
-                      Having trouble with the button? Copy and paste this URL into your browser:
-                    </p>
-                    <p style="margin: 0; font-size: 12px; word-break: break-all; color: #0B1D3A;">
-                      <a href="${resetLink}" target="_blank" rel="noopener noreferrer" style="color: #2563EB; text-decoration: underline;">
-                        ${resetLink}
-                      </a>
-                    </p>
-                  </td>
-                </tr>
-              </table>
-
               <!-- Security Notice -->
               <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top: 24px; background-color: #FFFBEB; border-left: 4px solid #F59E0B; border-radius: 4px; padding: 12px 14px;">
                 <tr>

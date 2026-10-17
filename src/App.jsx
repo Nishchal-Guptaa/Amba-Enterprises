@@ -7,8 +7,8 @@ import ScrollToTop from './components/ScrollToTop/ScrollToTop';
 import HomePage from './pages/Home/HomePage';
 import AboutPage from './pages/About/AboutPage';
 import ProductsPage from './pages/Products/ProductsPage';
-import BrandsPage from './pages/Brands/BrandsPage';
-import GalleryPage from './pages/Gallery/GalleryPage';
+
+
 import PurchaseOrderPage from './pages/PurchaseOrder/PurchaseOrderPage';
 import UpdatePasswordPage from './pages/UpdatePassword/UpdatePasswordPage';
 
@@ -33,8 +33,7 @@ function AppLayout() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/order" element={<PurchaseOrderPage />} />
-          <Route path="/brands" element={<BrandsPage />} />
-          <Route path="/gallery" element={<GalleryPage />} />
+
           <Route path="/update-password" element={<UpdatePasswordPage />} />
           <Route path="*" element={<HomePage />} />
         </Routes>

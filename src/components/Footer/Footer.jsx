@@ -99,11 +99,9 @@ const Footer = () => {
                 <Link to="/products">Products</Link>
               </li>
               <li>
-                <Link to="/brands">Brands</Link>
+                <Link to="/order">Place Order</Link>
               </li>
-              <li>
-                <Link to="/gallery">Gallery</Link>
-              </li>
+
             </ul>
           </div>
 

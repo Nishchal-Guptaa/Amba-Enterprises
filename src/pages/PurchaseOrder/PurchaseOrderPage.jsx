@@ -303,8 +303,7 @@ export default function PurchaseOrderPage() {
                 {successOrder.orderNumber}
               </div>
               <p className={styles.successMessage}>
-                Your purchase order request of{" "}
-                <strong>₹{formatPrice(successOrder.total)}</strong> for{" "}
+                Your purchase order request for{" "}
                 <strong>{successOrder.companyName}</strong> has been submitted
                 successfully. A confirmation email has been sent to{" "}
                 <strong>{successOrder.email}</strong>. Our team will review and process it
@@ -561,18 +560,6 @@ export default function PurchaseOrderPage() {
                         </span>
                       </div>
 
-                      {product.currentPrice !== null ? (
-                        <div className={styles.productPrice}>
-                          <span className={styles.priceSymbol}>₹</span>
-                          {formatPrice(product.currentPrice)}
-                          <span className={styles.priceUnit}>
-                            /{product.unit_of_measure}
-                          </span>
-                        </div>
-                      ) : (
-                        <span className={styles.noPrice}>Price on request</span>
-                      )}
-
                       <div className={styles.productActions}>
                         <input
                           type="number"
@@ -592,9 +579,9 @@ export default function PurchaseOrderPage() {
                           className={styles.addToCartBtn}
                           disabled={product.currentPrice === null}
                           onClick={() => addToCart(product)}
-                          title="Add to order">
-                          <ShoppingCart size={16} />
-                          Add
+                          title="Get Quotation">
+                          <FileText size={16} />
+                          Get Quotation
                         </button>
                       </div>
                     </div>
@@ -783,7 +770,7 @@ function CartPanel({
                 <div className={styles.cartItemInfo}>
                   <div className={styles.cartItemName}>{item.product.name}</div>
                   <div className={styles.cartItemPrice}>
-                    ₹{formatPrice(item.unitPrice)} × {item.qty}
+                    {item.product.unit_of_measure ? `${item.product.unit_of_measure} • ` : ""}Min: {item.product.minimum_order_qty}
                   </div>
                 </div>
                 <div className={styles.cartItemRight}>
@@ -800,9 +787,6 @@ function CartPanel({
                       <Plus size={12} />
                     </button>
                   </div>
-                  <span className={styles.cartItemTotal}>
-                    ₹{formatPrice(item.qty * item.unitPrice)}
-                  </span>
                   <button
                     className={styles.removeBtn}
                     onClick={() => removeFromCart(item.product.id)}
@@ -816,21 +800,20 @@ function CartPanel({
 
           <div className={styles.cartSummary}>
             <div className={styles.summaryRow}>
-              <span className={styles.summaryLabel}>Subtotal</span>
+              <span className={styles.summaryLabel}>Total Items</span>
               <span className={styles.summaryValue}>
-                ₹{formatPrice(cartSubtotal)}
+                {cartItemCount} product{cartItemCount !== 1 ? "s" : ""}
               </span>
             </div>
             <div className={styles.summaryRow}>
-              <span className={styles.summaryLabel}>Tax</span>
-              <span className={styles.summaryValue}>₹0.00</span>
-            </div>
-            <hr className={styles.cartDivider} />
-            <div className={styles.totalRow}>
-              <span className={styles.summaryLabel}>Total</span>
+              <span className={styles.summaryLabel}>Total Quantity</span>
               <span className={styles.summaryValue}>
-                ₹{formatPrice(cartSubtotal)}
+                {cart.reduce((sum, item) => sum + item.qty, 0)}{" "}
+                units
               </span>
+            </div>
+            <div className={styles.quotationNotice}>
+              Price quotation will be provided upon review of your request.
             </div>
           </div>
 
@@ -1268,7 +1251,7 @@ function CheckoutModal({
                   {cartItemCount} item(s) selected
                 </span>
                 <div className={styles.summaryBarTotal}>
-                  Total: ₹{formatPrice(cartSubtotal)}
+                  Quotation Request
                 </div>
               </div>
               <div className={styles.modalFooterBtns}>
